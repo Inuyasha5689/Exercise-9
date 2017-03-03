@@ -1,20 +1,25 @@
 <template>
     <div class="container">
         <form>
-            <div class="row">
+            <div class="row" v-if="!isSubmitted">
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
 
-                    <app-name v-model="name"></app-name>
+                    <app-name v-model="userData.fullName"></app-name>
 
                     <div class="form-group">
-                        <label for="email">Email:</label><input type="email" v-model="userData.email" id="email"/>
+                        <label for="email">Email:</label><input class="form-control" type="email" v-model="userData.email" id="email"/>
                     </div>
                     <div class="form-group">
-                        <label for="password">Password:</label><input type="password" v-model="userData.password"/>
+                        <label for="password">Password:</label><input class="form-control" type="password" v-model="userData.password"/>
                     </div>
                     <hr>
-                    <app-stored v-model="storedData"></app-stored>
-                    <button class="btn" @click.prevent="submitted">Submit!</button>
+                    <div class="form-group">
+                        <label><input type="radio" value="Yes" v-model="storedData"/>Yes</label>
+                    
+                    
+                        <label><input type="radio" value="No" v-model="storedData"/>No</label>
+                    </div>
+                    <button class="btn btn-primary" @click.prevent="submitted">Submit!</button>
 
                     <!-- Exercise 1 -->
                     <!-- Create a Signup Form where you retrieve the following Information -->
@@ -41,7 +46,7 @@
                         <h4>Your Data</h4>
                     </div>
                     <div class="panel-body">
-                        <p>Full Name: {{ userData.Name }}</p>
+                        <p>Full Name: {{ userData.fullName }}</p>
                         <p>Mail: {{ userData.email }}</p>
                         <p>Password: </p>
                         <p>Store in Database?: {{ storedData }}</p>
@@ -53,19 +58,18 @@
 </template>
 
 <script>
-    import Stored from './Stored.vue';
     import Name from './Name.vue';
 
     export default {
         data () {
             return {
                 userData: {
-                    name: '',
+                    fullName: 'Drake Scott',
                     email: '',
                     password: ''
                 },
                 isSubmitted: false,
-                storedData: false
+                storedData: 'Yes'
             }
         },
         methods: {
@@ -74,7 +78,6 @@
             }
         },
         components: {
-            appStored: Stored,
             appName: Name
         }
 
